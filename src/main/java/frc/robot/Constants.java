@@ -61,7 +61,7 @@ public final class Constants
     public static final class SpeedConstants
     {
         public static final double driveTestSpeed = 0.4;
-        public static final double driveSpeed = driveTestSpeed;//0.8
+        public static final double driveSpeed = driveTestSpeed*2;//0.8
         public static final double autoDriveSpeed = 0.6;
 
         public static final double minShootSpeed = .9;

@@ -70,11 +70,12 @@ public class RobotContainer
 
   private void configureButtonBindings() 
   {
-    JoystickButton dA, dB, dBACK,
+    JoystickButton dA, dB, dY, dBACK,
                    oA, oB, oY, oLB, oRB, oBACK;
 
     dA = new JoystickButton(driver, 1);
     dB = new JoystickButton(driver, 2);
+    dY = new JoystickButton(driver, 4);
     dBACK = new JoystickButton(driver, 7);
 
     oA = new JoystickButton(operator, 1);
