@@ -103,7 +103,7 @@ public class RobotContainer
 
   private void configureLimelight()
   {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+    //NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
   }
 
   private void configureShuffleboard()

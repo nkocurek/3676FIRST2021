@@ -89,7 +89,7 @@ public class BetterShooter extends SubsystemBase
 
   public boolean atSpeed()
   {
-    return lShooter.getSelectedSensorVelocity() >= speed;
+    return lShooter.getSelectedSensorVelocity() >= speed-1000;
   }
 
   @Override

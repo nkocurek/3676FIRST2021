@@ -43,6 +43,7 @@ public class BetterVision extends CommandBase {
   @Override
   public void execute() 
   {
+    //System.out.println(NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").getDouble(0));
     tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
     tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0) + offset;
     if(tv < 1.0)
@@ -66,14 +67,14 @@ public class BetterVision extends CommandBase {
         if(steer < -VisionConstants.maxSteer)
           steer = -VisionConstants.maxSteer;
         
-        drivetrain.drive(steer, 0);
+        drivetrain.drive(0, steer);
     }
   }
 
   @Override
   public void end(boolean interrupted) 
   {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+    //NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     drivetrain.drive(0, 0);
   }
 
