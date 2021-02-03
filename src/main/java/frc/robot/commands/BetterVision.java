@@ -7,11 +7,9 @@
 
 package frc.robot.commands;
 
-import frc.robot.Constants.SpeedConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class BetterVision extends CommandBase {
