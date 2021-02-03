@@ -87,6 +87,7 @@ public class Drivetrain extends SubsystemBase
   {
     lMainFalcon.setSelectedSensorPosition(0);
     rMainFalcon.setSelectedSensorPosition(0);
+    gyro.reset();
     odometry.resetPosition(odometry.getPoseMeters(), Rotation2d.fromDegrees(getHeading()));
   }
 
