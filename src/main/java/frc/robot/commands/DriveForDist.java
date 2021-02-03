@@ -17,14 +17,16 @@ public class DriveForDist extends CommandBase
   private final Drivetrain drivetrain;
 
   private int direction = 1;
-  private final double distance;
+  private final double rDistance;
+  private final double lDistance;
 
-  public DriveForDist(Drivetrain drive, double dist, boolean back) 
+  public DriveForDist(Drivetrain drive, double rDist, double lDist, boolean back) 
   {
     drivetrain = drive;
     if(back)
       direction = -1;
-    distance = dist;
+    rDistance = rDist;
+    lDistance = lDist;
     drivetrain.setRamp(SpeedConstants.autoDriveRampSpeed);
     addRequirements(drivetrain);
   }
@@ -51,6 +53,6 @@ public class DriveForDist extends CommandBase
   @Override
   public boolean isFinished() 
   {
-    return Math.abs(drivetrain.leftEncoder()) > distance;
+    return Math.abs(drivetrain.leftEncoder()) > lDistance && Math.abs(drivetrain.rightEncoder()) > rDistance;
   }
 }
