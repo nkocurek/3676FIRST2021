@@ -7,8 +7,14 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.SpeedConstants;
 import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DriveStraightForDist extends CommandBase 
@@ -19,6 +25,7 @@ public class DriveStraightForDist extends CommandBase
   private int direction = 1;
   private final double rDistance;
   private final double lDistance;
+  private final Pose2d goal;
 
   public DriveStraightForDist(Drivetrain drive, double rDist, double lDist, boolean back) 
   {
@@ -28,6 +35,7 @@ public class DriveStraightForDist extends CommandBase
     rDistance = rDist;
     lDistance = lDist;
     drivetrain.setRamp(SpeedConstants.autoDriveRampSpeed);
+    goal = new Pose2d(rDistance, lDistance, Rotation2d.fromDegrees(0));
     addRequirements(drivetrain);
   }
 
@@ -40,19 +48,25 @@ public class DriveStraightForDist extends CommandBase
   @Override
   public void execute() 
   {
-    drivetrain.drive(SpeedConstants.autoDriveSpeed*direction, 0);
+    DifferentialDriveKinematics kinematics =
+    new DifferentialDriveKinematics(AutoConstants.kTrackwidthMeters);
+
+    var chassisSpeeds = new ChassisSpeeds(SpeedConstants.driveSpeed, 0, 0);
+
+    DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
+    
+    drivetrain.tankDrive(wheelSpeeds.leftMetersPerSecond, wheelSpeeds.rightMetersPerSecond);
   }
 
   @Override
   public void end(boolean interrupted) 
   {
-    drivetrain.setRamp(SpeedConstants.rampSpeed);
     drivetrain.drive(0, 0);
   }
 
   @Override
   public boolean isFinished() 
   {
-    return Math.abs(drivetrain.leftEncoder()) > lDistance && Math.abs(drivetrain.rightEncoder()) > rDistance;
+    return drivetrain.getPose().equals(goal);
   }
 }

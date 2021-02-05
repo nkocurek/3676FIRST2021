@@ -82,6 +82,11 @@ public class Drivetrain extends SubsystemBase
     //needs to be tested for direction
     drive.arcadeDrive(steer, speed, true); 
   }
+
+  public void tankDrive(double left, double right)
+  {
+    drive.tankDrive(left, right);
+  }
   
   public void reset() 
   {

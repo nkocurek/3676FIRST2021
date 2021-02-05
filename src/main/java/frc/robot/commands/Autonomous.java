@@ -10,6 +10,6 @@ public class Autonomous extends SequentialCommandGroup
 {
     public Autonomous(Drivetrain drivetrain, BetterShooter shooter, Magazine magazine, Feeder feeder)
     {
-        
+        addCommands(new DriveStraightForDist(drivetrain, 1, 1, false));
     }
 }
