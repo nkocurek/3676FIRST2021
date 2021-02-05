@@ -51,7 +51,7 @@ public class DriveStraightForDist extends CommandBase
     DifferentialDriveKinematics kinematics =
     new DifferentialDriveKinematics(AutoConstants.kTrackwidthMeters);
 
-    var chassisSpeeds = new ChassisSpeeds(SpeedConstants.driveSpeed, 0, 0);
+    var chassisSpeeds = new ChassisSpeeds(SpeedConstants.driveSpeed*direction, 0, 0);
 
     DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
     
