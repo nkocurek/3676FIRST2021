@@ -85,7 +85,7 @@ public class Drivetrain extends SubsystemBase
 
   public void tankDrive(double left, double right)
   {
-    drive.tankDrive(left, right);
+    drive.tankDrive(left, -right);
   }
   
   public void reset() 

@@ -13,10 +13,12 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.PortConstants;
+import frc.robot.Constants.SpeedConstants;
 
 public class BetterShooter extends SubsystemBase 
 {
@@ -63,18 +65,27 @@ public class BetterShooter extends SubsystemBase
   
     lShooter.setNeutralMode(NeutralMode.Brake);
     rShooter.setNeutralMode(NeutralMode.Brake);
-    lShooter.configClosedloopRamp(.75);
-    rShooter.configClosedloopRamp(.75);
+    lShooter.configClosedloopRamp(.95);
+    rShooter.configClosedloopRamp(.95);
     lShooter.configOpenloopRamp(1);
     rShooter.configOpenloopRamp(1);
     lShooter.setSelectedSensorPosition(0);
     rShooter.setSelectedSensorPosition(0);
   }
 
-  public void shoot(double speed)
+  public void shoot()
   {
+    double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+    if(tv < 1.0)
+    {
+      speed = 0;
+    }
+    else
+    {
+      double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+      speed = SpeedConstants.maxShootSpeed/ta;
+    }
     lShooter.set(ControlMode.Velocity, speed);
-    this.speed = speed;
   }
 
   public void run()
@@ -89,7 +100,7 @@ public class BetterShooter extends SubsystemBase
 
   public boolean atSpeed()
   {
-    return lShooter.getSelectedSensorVelocity() >= speed-1000;
+    return lShooter.getSelectedSensorVelocity() >= speed*.8;
   }
 
   @Override

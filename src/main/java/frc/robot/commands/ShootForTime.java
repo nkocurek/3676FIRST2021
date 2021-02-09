@@ -36,7 +36,7 @@ public class ShootForTime extends CommandBase {
   @Override
   public void initialize() 
   {
-    shooter.shoot(SpeedConstants.minShootSpeed);
+    shooter.shoot();
     startTime = Timer.getFPGATimestamp();
   }
 

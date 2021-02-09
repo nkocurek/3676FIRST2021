@@ -23,6 +23,7 @@ import frc.robot.subsystems.Magazine;
 import frc.robot.Constants.*;
 import frc.robot.commands.Autonomous;
 import frc.robot.commands.BetterVision;
+import frc.robot.commands.DriveStraightForDist;
 
 public class RobotContainer 
 {
@@ -41,15 +42,15 @@ public class RobotContainer
                                 .andThen(() -> magazine.stop())
                                 .andThen(() -> feeder.stop());
 
-  private final Command shootSequence = new InstantCommand(() -> shooter.shoot(20000), shooter)
+  private final Command shootSequence = new InstantCommand(() -> shooter.shoot(), shooter)
                                           .andThen(new WaitUntilCommand(shooter::atSpeed))
                                           .andThen(feeder::run)
                                           .andThen(magazine::run);
 
-  private final Command bleh = new InstantCommand(() -> shooter.shoot(5000), shooter)
+  /*private final Command bleh = new InstantCommand(() -> shooter.shoot(), shooter)
                                           .andThen(new WaitUntilCommand(shooter::atSpeed))
                                           .andThen(feeder::run)
-                                          .andThen(magazine::run);
+                                          .andThen(magazine::run);*/
 
   public RobotContainer() 
   {
@@ -67,11 +68,12 @@ public class RobotContainer
 
   private void configureButtonBindings() 
   {
-    JoystickButton dA, dB, dBACK,
+    JoystickButton dA, dB, dX, dBACK,
                    oA, oB, oY, oLB, oRB, oBACK;
 
     dA = new JoystickButton(driver, 1);
     dB = new JoystickButton(driver, 2);
+    dX = new JoystickButton(driver, 3);
     dBACK = new JoystickButton(driver, 7);
 
     oA = new JoystickButton(operator, 1);
@@ -84,14 +86,13 @@ public class RobotContainer
     //driver:
     dA.whenPressed(new BetterVision(drivetrain, 0 /*offset*/));
     dB.toggleWhenPressed(new StartEndCommand(() -> intake.deploy(), () -> intake.unploy(), intake));
+    dX.whenPressed(new DriveStraightForDist(drivetrain, 1, 1, false)).whenReleased(() -> drivetrain.tankDrive(0, 0));
     dBACK.whenPressed(kill);
 
     //operator:
     oRB.whenPressed(() -> intake.run()).whenReleased(() -> intake.stop());
     oLB.whenPressed(() -> intake.regurgitate()).whenReleased(() -> intake.stop());
     oA.whenPressed(shootSequence)
-    .whenReleased(kill);
-    oB.whenPressed(bleh)
     .whenReleased(kill);
     oBACK.whenPressed(kill);
     oY.whenPressed(shooter::run).whenReleased(kill);

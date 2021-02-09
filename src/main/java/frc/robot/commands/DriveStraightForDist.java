@@ -55,6 +55,8 @@ public class DriveStraightForDist extends CommandBase
 
     DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
     
+    System.out.println(wheelSpeeds.leftMetersPerSecond);
+
     drivetrain.tankDrive(wheelSpeeds.leftMetersPerSecond, wheelSpeeds.rightMetersPerSecond);
   }
 

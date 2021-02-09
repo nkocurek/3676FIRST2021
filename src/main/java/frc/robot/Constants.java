@@ -48,7 +48,7 @@ public final class Constants
     {
         public static final double kP = 0.0015;
         public static final double kI = 0.001;
-        public static final double minThreshold = .3;
+        public static final double minThreshold = .1;
         public static final double maxSteer     = .4;
         public static final double minDriveSpeed = .26;
         public static final double offset = 3.8;
@@ -65,7 +65,7 @@ public final class Constants
         public static final double autoDriveSpeed = 0.6;
 
         public static final double minShootSpeed = .9;
-        public static final double maxShootSpeed = 0.95;
+        public static final double maxShootSpeed = 18000;
 
         public static final double intakeSpeed = 1.0;
         public static final double magazineSpeed = 0.7;
