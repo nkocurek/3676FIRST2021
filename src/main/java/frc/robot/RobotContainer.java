@@ -27,6 +27,7 @@ import frc.robot.commands.DriveStraightForDist;
 
 public class RobotContainer 
 {
+  //Initialize subsytems
   private final Drivetrain drivetrain = new Drivetrain();
   private final Intake intake = new Intake();
   private final Magazine magazine = new Magazine();
@@ -34,9 +35,11 @@ public class RobotContainer
   private final BetterShooter shooter = new BetterShooter();
   private final BetterElevator elevator = new BetterElevator();
 
+  //Initialize joysticks
   private final Joystick driver = new Joystick(0);
   private final Joystick operator = new Joystick(1);
 
+  //Initialize commands
   private final Command kill = new InstantCommand(() -> intake.stop())
                                 .andThen(() -> shooter.stop())
                                 .andThen(() -> magazine.stop())
@@ -54,18 +57,21 @@ public class RobotContainer
 
   public RobotContainer() 
   {
+    //On robot start, configure any robot settings
     configureDefaultCommands();
     configureButtonBindings();
     configureLimelight();
     configureShuffleboard();
   }
 
+  //Put any commands that need to run constantly (i.e. driving)
   private void configureDefaultCommands()
   {
     drivetrain.setDefaultCommand(new RunCommand(() -> drivetrain.drive(-driver.getRawAxis(1)*SpeedConstants.driveSpeed, driver.getRawAxis(4)*SpeedConstants.driveSpeed), drivetrain));
     elevator.setDefaultCommand(new RunCommand(() -> elevator.run(operator.getRawAxis(1)), elevator));
   }
 
+  //Bind any digital buttons to commands here
   private void configureButtonBindings() 
   {
     JoystickButton dA, dB, dX, dBACK,
@@ -98,6 +104,7 @@ public class RobotContainer
     oY.whenPressed(shooter::run).whenReleased(kill);
   }
 
+  //Configure limelight settings
   private void configureLimelight()
   {
     //NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);

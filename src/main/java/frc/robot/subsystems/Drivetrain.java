@@ -27,13 +27,17 @@ import frc.robot.Constants.SpeedConstants;
 
 public class Drivetrain extends SubsystemBase 
 {  
+  //Initialize motors
   private final WPI_TalonFX lMainFalcon = new WPI_TalonFX(PortConstants.lMainFalcon);
   private final WPI_TalonFX rMainFalcon = new WPI_TalonFX(PortConstants.rMainFalcon);
   private final WPI_TalonFX lSubFalcon = new WPI_TalonFX(PortConstants.lSubFalcon);
   private final WPI_TalonFX rSubFalcon = new WPI_TalonFX(PortConstants.rSubFalcon);
 
+  //Drivetrain object with facultative methods
   private final DifferentialDrive drive = new DifferentialDrive(lMainFalcon, rMainFalcon);
+  //navX object through the MXP port
   private final AHRS gyro = new AHRS(Port.kMXP);
+  //Odometry object for more facultative methods
   private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
   public Drivetrain()
@@ -41,17 +45,21 @@ public class Drivetrain extends SubsystemBase
     lMainFalcon.configFactoryDefault();
     rMainFalcon.configFactoryDefault();
 
+    //Sets up TalonFX integrated encoder
     lMainFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
     rMainFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
 
+    //Set directions
     lMainFalcon.setInverted(true);
     rMainFalcon.setInverted(false);
 
+    //Neutral mode is whether robot will just cut the motors, or will apply backwards torque in order to instantly brake
     lMainFalcon.setNeutralMode(NeutralMode.Brake);
     rMainFalcon.setNeutralMode(NeutralMode.Brake);
     lSubFalcon.setNeutralMode(NeutralMode.Brake);
     rSubFalcon.setNeutralMode(NeutralMode.Brake);
 
+    //Sets follow directions
     lSubFalcon.follow(lMainFalcon);
     lSubFalcon.setInverted(InvertType.FollowMaster);
     rSubFalcon.follow(rMainFalcon);
@@ -59,11 +67,13 @@ public class Drivetrain extends SubsystemBase
 
     drive.setSafetyEnabled(false);
 
+    //Sets ramp, which is speed delay
     lMainFalcon.configOpenloopRamp(SpeedConstants.rampSpeed);
     rMainFalcon.configOpenloopRamp(SpeedConstants.rampSpeed);
     lMainFalcon.configClosedloopRamp(SpeedConstants.autoDriveRampSpeed);
     rMainFalcon.configClosedloopRamp(SpeedConstants.autoDriveRampSpeed);
 
+    //Encoder reset method
     reset();
   }
 
@@ -73,6 +83,7 @@ public class Drivetrain extends SubsystemBase
     odometry.update(Rotation2d.fromDegrees(getHeading()), lMainFalcon.getSelectedSensorPosition()*AutoConstants.distancePerPulse,
                     rMainFalcon.getSelectedSensorPosition()*AutoConstants.distancePerPulse);
 
+    //Prints encoder outputs to the SmartDashboard
     SmartDashboard.putNumber("Left Encoder", lMainFalcon.getSelectedSensorPosition());                  
     SmartDashboard.putNumber("Right Encoder", rMainFalcon.getSelectedSensorPosition());
   }
@@ -90,6 +101,7 @@ public class Drivetrain extends SubsystemBase
   
   public void reset() 
   {
+    //Resets encoders, gyro, and odometry
     lMainFalcon.setSelectedSensorPosition(0);
     rMainFalcon.setSelectedSensorPosition(0);
     gyro.reset();

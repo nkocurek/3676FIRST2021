@@ -17,17 +17,20 @@ import frc.robot.Constants.SpeedConstants;
 
 public class BetterElevator extends SubsystemBase 
 {   
+    //Initialize motors
     private final WPI_TalonFX lElevator = new WPI_TalonFX(PortConstants.lElevator);
     private final WPI_TalonFX rElevator = new WPI_TalonFX(PortConstants.rElevator);
 
     public BetterElevator()
     {
+        //Synchronize elevator
         rElevator.follow(lElevator);
         rElevator.setInverted(InvertType.OpposeMaster);
     }
     
     public void run(double speed)
     {
+        //Runs elevator certain speed
         lElevator.set(ControlMode.PercentOutput, SpeedConstants.elevatorSpeed*speed);
     }
 

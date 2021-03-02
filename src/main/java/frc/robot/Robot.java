@@ -22,6 +22,7 @@ public class Robot extends TimedRobot
   public void robotInit() 
   {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+    //Creates robot instance
     robotContainer = new RobotContainer();
   }
 
