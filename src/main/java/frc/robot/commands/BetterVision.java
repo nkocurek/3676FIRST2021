@@ -17,8 +17,9 @@ public class BetterVision extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Drivetrain drivetrain;
 
-  private double tx;
-  private double tv;
+  //LimeLight constants
+  private double tx; //how far in x-diretion is the target offset
+  private double tv; //whether the Light has a value that it can see. should be a boolean
   private final double offset;
   private double steer;
   private double sum;

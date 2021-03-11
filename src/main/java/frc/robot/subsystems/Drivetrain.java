@@ -146,7 +146,7 @@ public class Drivetrain extends SubsystemBase
     return new DifferentialDriveWheelSpeeds(leftEncoderRate(), rightEncoderRate());
   }
 
-  private double getHeading() 
+  public double getHeading() 
   {
     return Math.IEEEremainder(gyro.getAngle(), 360);
   }

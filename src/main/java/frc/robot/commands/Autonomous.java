@@ -8,8 +8,8 @@ import frc.robot.subsystems.Magazine;
 
 public class Autonomous extends SequentialCommandGroup
 {
-    public Autonomous(Drivetrain drivetrain, BetterShooter shooter, Magazine magazine, Feeder feeder)
+    public Autonomous(Drivetrain drivetrain, double angle)
     {
-        addCommands(new DriveStraightForDist(drivetrain, 1, 1, false));
+        addCommands(new SpinForDist(drivetrain, angle));
     }
 }
